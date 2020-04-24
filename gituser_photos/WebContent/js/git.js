@@ -16,7 +16,7 @@ $(document).ready(function() {
 			contents +=  "<td onclick = \'getFollowers(\""+data[idx].followers_url +"\","+ idx +")\'>" + data[idx].login + "</td>";
 
 			contents += "<td> 0 </td>";
-//			contents += "<td> <img src='" + data[idx].avatar_url + "' width=50 height=50 /></td>";
+
 			contents += "</tr>";
 		})
 		
@@ -32,11 +32,18 @@ function getFollowers(my_url, index) {
 		url:my_url
 	}).then(function(data){
 		console.log(data);
-		var flowers_num = Object.keys(data).length;
-		console.log(flowers_num, index); 
-		$('#usersTable tr:eq(' + (index + 1) + ') td:eq(2)').html(flowers_num);
+
+		console.log(data["0"].avatar_url);
+		var images = "";
+		$.each(data, function(idx) {
+			var img = data[idx].avatar_url;
+			console.log(img);
+			images += "<img src=" + img + "width=40 height=40 />";
+		});
+
+		$('#usersTable tr:eq(' + (index + 1) + ') td:eq(2)').html(images);
 		
-		
+
 		
 	})
 
